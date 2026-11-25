@@ -36,3 +36,11 @@ def test_values_in_allowed_ranges(sample_df, schema):
 def test_splits_do_not_leak(splits, cfg):
     report = leakage_report(splits, cfg)
     assert report["ok"], report
+def test_custom_fraud_class_values(sample_data):
+    """Свой тест 1: целевая колонка Class содержит только 0 и 1."""
+    unique_vals = set(sample_data["Class"].unique())
+    assert unique_vals.issubset({0, 1})
+
+def test_custom_amount_is_non_negative(sample_data):
+    """Свой тест 2: сумма транзакции Amount строго неотрицательна."""
+    assert (sample_data["Amount"] >= 0).all()
